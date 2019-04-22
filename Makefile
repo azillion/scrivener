@@ -12,7 +12,7 @@ upload-zip: create-release
 
 .PHONY: create-release
 create-release: build
-	UPLOAD_URL=$$(curl -v -H "Authorization: token ${GITHUB_TOKEN}" \
+	UPLOAD_URL=$(shell curl -v -H "Authorization: token ${GITHUB_TOKEN}" \
 		-d "{ \"tag_name\": ${GITHUB_SHA}, \"target_commitish\": ${GITHUB_REF} }" \
 		"https://api.github.com/repos/${GITHUB_REPOSITORY}/releases" \
 		| jq --raw-output '.upload_url' \
