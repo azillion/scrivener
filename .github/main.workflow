@@ -5,7 +5,7 @@ workflow "Build and deploy" {
 
 action "Build" {
   uses = "actions/docker/cli@8cdf801b322af5f369e00d85e9cf3a7122f49108"
-  runs = "build -t $GITHUB_REPOSITORY:$GITHUB_SHA ."
+  runs = "docker build -t $GITHUB_REPOSITORY:$GITHUB_SHA ."
 }
 
 action "Trigger Netlify Deploy" {
