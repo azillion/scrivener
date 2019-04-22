@@ -1,10 +1,21 @@
 workflow "Build and deploy" {
   on = "push"
-  resolves = ["Trigger Netlify Deploy"]
+  resolves = [
+    "Trigger Netlify Deploy",
+    "Build",
+    "Master",
+  ]
+}
+
+# Filter for master branch
+action "Master" {
+  uses = "actions/bin/filter@3c0b4f0e63ea54ea5df2914b4fabf383368cd0da"
+  args = "branch master"
 }
 
 action "Build" {
   uses = "actions/docker/cli@8cdf801b322af5f369e00d85e9cf3a7122f49108"
+  needs = ["Master"]
   runs = "docker build -t azillion/scrivener ."
 }
 
@@ -13,7 +24,6 @@ action "Trigger Netlify Deploy" {
   needs = ["Build"]
   args = ["POST", "$NETLIFY_DEPLOY_URL"]
   secrets = [
-    "GITHUB_TOKEN",
     "NETLIFY_DEPLOY_URL",
   ]
 }
