@@ -26,4 +26,4 @@ COPY . ./
 
 RUN chmod 777 ./Makefile
 
-RUN make
+ENTRYPOINT ["make"]
