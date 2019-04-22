@@ -1,5 +1,3 @@
-REPOSITORY := scrivener
-
 all: upload-zip
 
 .PHONY: upload-zip
