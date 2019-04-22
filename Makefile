@@ -11,7 +11,7 @@ upload-zip: create-release
 create-release: build
 	UPLOAD_URL=$$(curl -H "Authorization: token $$GITHUB_TOKEN" \
 		-d "{ \"tag_name\": $$GITHUB_SHA, \"target_commitish\": $$GITHUB_REF }" \
-		"https://api.github.com/repos/$$GITHUB_REPOSITORY/releases"
+		"https://api.github.com/repos/$$GITHUB_REPOSITORY/releases")
 
 .PHONY: build
 build: deps
