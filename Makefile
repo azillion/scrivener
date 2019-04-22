@@ -18,8 +18,8 @@ create-release: build
 
 .PHONY: build
 build: deps
-	GOOS=linux GOARCH=amd64 go build -o ${REPOSITORY} main.go
-	zip ${REPOSITORY}.zip ${REPOSITORY}
+	GOOS=linux GOARCH=amd64 go build -o $(REPOSITORY) main.go
+	zip $(REPOSITORY).zip $(REPOSITORY)
 
 .PHONY: deps
 deps:
