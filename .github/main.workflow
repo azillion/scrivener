@@ -16,17 +16,15 @@ action "Master" {
 action "Build" {
   uses = "actions/docker/cli@8cdf801b322af5f369e00d85e9cf3a7122f49108"
   needs = ["Master"]
-  runs = "docker build --build-arg REPOSITORY_ARG=$REPOSITORY --build-arg GITHUB_TOKEN_ARG=$GITHUB_TOKEN --build-arg GITHUB_SHA_ARG=$GITHUB_SHA --build-arg GITHUB_REF_ARG=$GITHUB_REF --build-arg GITHUB_REPOSITORY_ARG=$GITHUB_REPOSITORY -t azillion/scrivener ."
+  runs = "docker build -t azillion/scrivener ."
   secrets = ["GITHUB_TOKEN"]
-  env = {
-    REPOSITORY = "scrivener"
-  }
 }
 
 action "Run" {
   uses = "actions/docker/cli@8cdf801b322af5f369e00d85e9cf3a7122f49108"
   needs = ["Build"]
-  runs = "docker run --rm azillion/scrivener"
+  runs = "docker run --rm --env-file ./env.list azillion/scrivener"
+  secrets = ["GITHUB_TOKEN"]
 }
 
 action "Trigger Netlify Deploy" {
@@ -37,4 +35,3 @@ action "Trigger Netlify Deploy" {
     "NETLIFY_DEPLOY_URL",
   ]
 }
-
