@@ -27,3 +27,11 @@ deps:
 	go get github.com/aws/aws-lambda-go/lambda
 	GO111MODULE=off go get -u gopkg.in/src-d/go-git.v4/...
 	
+
+.PHONY: env
+env:
+	@echo $(REPOSITORY)
+	@echo $(GITHUB_TOKEN)
+	@echo $(GITHUB_SHA)
+	@echo $(GITHUB_REF)
+	@echo $(GITHUB_REPOSITORY)
