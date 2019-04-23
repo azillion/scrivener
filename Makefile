@@ -10,7 +10,7 @@ upload-zip: create-release
 
 .PHONY: create-release
 create-release: build
-	UPLOAD_URL=$(shell curl -v -H "Authorization: token ${GITHUB_TOKEN}" \
+	UPLOAD_URL=$(shell curl -H "Authorization: token ${GITHUB_TOKEN}" \
 		-d "{ \"tag_name\": ${GITHUB_SHA}, \"target_commitish\": ${GITHUB_REF} }" \
 		"https://api.github.com/repos/${GITHUB_REPOSITORY}/releases" \
 		| jq --raw-output '.upload_url' \
@@ -31,13 +31,10 @@ deps: env
 .PHONY: env
 env:
 	printenv
+	@echo "printing directely now"
 	@echo $(REPOSITORY)
 	@echo $(GITHUB_TOKEN)
 	@echo $(GITHUB_SHA)
 	@echo $(GITHUB_REF)
 	@echo $(GITHUB_REPOSITORY)
-	@echo $$(REPOSITORY)
-	@echo $$(GITHUB_TOKEN)
-	@echo $$(GITHUB_SHA)
-	@echo $$(GITHUB_REF)
-	@echo $$(GITHUB_REPOSITORY)
+	@echo "done printing directly"
