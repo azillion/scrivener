@@ -15,7 +15,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		zip \
 		jq \
 		curl
-
+RUN mkdir -p /tmp
+RUN touch /tmp/response.json
 WORKDIR ./src/azillion/scrivener
 COPY . ./
 
