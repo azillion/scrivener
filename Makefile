@@ -22,7 +22,7 @@ build: deps
 	zip $(REPOSITORY).zip $(REPOSITORY)
 
 .PHONY: deps
-deps:
+deps: env
 	go get github.com/aws/aws-lambda-go/events
 	go get github.com/aws/aws-lambda-go/lambda
 	GO111MODULE=off go get -u gopkg.in/src-d/go-git.v4/...
@@ -30,8 +30,14 @@ deps:
 
 .PHONY: env
 env:
+	printenv
 	@echo $(REPOSITORY)
 	@echo $(GITHUB_TOKEN)
 	@echo $(GITHUB_SHA)
 	@echo $(GITHUB_REF)
 	@echo $(GITHUB_REPOSITORY)
+	@echo $$(REPOSITORY)
+	@echo $$(GITHUB_TOKEN)
+	@echo $$(GITHUB_SHA)
+	@echo $$(GITHUB_REF)
+	@echo $$(GITHUB_REPOSITORY)
