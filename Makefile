@@ -43,9 +43,10 @@ create-release: build
 		-d "{ \"tag_name\": \"${VERSION}\", \"target_commitish\": \"${GITHUB_REF}\" }" \
 		"https://api.github.com/repos/${GITHUB_REPOSITORY}/releases" -o /tmp/response.json
 	cat /tmp/response.json
-	UPLOAD_URL=$(shell cat /tmp/response.json \
+	cat /tmp/response.json \
 		| jq --raw-output '.upload_url' \
-		| sed 's/{.*//g')
+		| sed 's/{.*//g' > /tmp/response.json
+	UPLOAD_URL=$(shell cat /tmp/response.json)
 
 .PHONY: build
 build: deps
