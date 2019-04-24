@@ -45,8 +45,8 @@ create-release: build
 		"https://api.github.com/repos/${GITHUB_REPOSITORY}/releases" -o /tmp/response.json
 	cat /tmp/response.json
 	cat /tmp/response.json \
-		| jq --raw-output '.upload_url' \
-		| sed 's/{.*//g' > /tmp/response.json
+		| jq --raw-output '.upload_url' > /tmp/response.json
+	sed -i 's/{.*//g' /tmp/response.json
 
 .PHONY: build
 build: deps
