@@ -47,7 +47,7 @@ create-release: build
 	cat /tmp/response.json \
 		| jq --raw-output '.upload_url'
 	cat /tmp/response.json \
-		| jq --raw-output '.upload_url' > /tmp/upload_url.txt
+		| jq --raw-output --unbuffered '.upload_url' > /tmp/upload_url.txt
 	cat /tmp/upload_url.txt
 	sed -i 's/{.*//g' /tmp/upload_url.txt
 	cat /tmp/upload_url.txt
