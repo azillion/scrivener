@@ -25,11 +25,12 @@ CGO_ENABLED := 0
 # Set any default go build tags.
 BUILDTAGS :=
 
+UPLOAD_URL = $(shell cat /tmp/upload_url.txt)
+
 all: upload-zip
 
 .PHONY: upload-zip
 upload-zip: create-release
-	UPLOAD_URL=$(shell cat /tmp/response.json)
 	curl -H "Authorization: token ${GITHUB_TOKEN}" \
 		-H 'Content-Type: application/zip' \
 		-F "file=@${REPOSITORY}.zip;type=application/zip" \
@@ -40,17 +41,13 @@ upload-zip: create-release
 create-release: build
 	mkdir -p /tmp/
 	touch /tmp/response.json
+	touch /tmp/upload_url.txt
 	curl -H "Authorization: token ${GITHUB_TOKEN}" \
 		-d "{ \"tag_name\": \"${VERSION}\", \"target_commitish\": \"${GITHUB_REF}\" }" \
 		"https://api.github.com/repos/${GITHUB_REPOSITORY}/releases" -o /tmp/response.json
-	cat /tmp/response.json
-	cat /tmp/response.json \
-		| jq --raw-output '.upload_url'
 	cat /tmp/response.json \
 		| jq --raw-output --unbuffered '.upload_url' > /tmp/upload_url.txt
-	cat /tmp/upload_url.txt
 	sed -i 's/{.*//g' /tmp/upload_url.txt
-	cat /tmp/upload_url.txt
 
 .PHONY: build
 build: deps
