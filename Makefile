@@ -29,6 +29,7 @@ all: upload-zip
 
 .PHONY: upload-zip
 upload-zip: create-release
+	UPLOAD_URL=$(shell cat /tmp/response.json)
 	curl -H "Authorization: token ${GITHUB_TOKEN}" \
 		-H 'Content-Type: application/zip' \
 		-F "file=@${REPOSITORY}.zip;type=application/zip" \
@@ -46,7 +47,6 @@ create-release: build
 	cat /tmp/response.json \
 		| jq --raw-output '.upload_url' \
 		| sed 's/{.*//g' > /tmp/response.json
-	UPLOAD_URL=$(shell cat /tmp/response.json)
 
 .PHONY: build
 build: deps
