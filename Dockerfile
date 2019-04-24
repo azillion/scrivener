@@ -14,7 +14,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		make \
 		zip \
 		jq \
-		curl
+		curl \
+		sed
 RUN mkdir -p /tmp
 RUN touch /tmp/response.json
 WORKDIR ./src/azillion/scrivener
