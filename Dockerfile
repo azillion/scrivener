@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN mkdir -p /tmp
 RUN touch /tmp/response.json
+RUN touch /tmp/upload_url.txt
 WORKDIR ./src/azillion/scrivener
 COPY . ./
 

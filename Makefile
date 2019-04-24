@@ -47,10 +47,10 @@ create-release: build
 	cat /tmp/response.json \
 		| jq --raw-output '.upload_url'
 	cat /tmp/response.json \
-		| jq --raw-output '.upload_url' > /tmp/response.json
-	cat /tmp/response.json
-	sed -i 's/{.*//g' /tmp/response.json
-	cat /tmp/response.json
+		| jq --raw-output '.upload_url' > /tmp/upload_url.txt
+	cat /tmp/upload_url.txt
+	sed -i 's/{.*//g' /tmp/upload_url.txt
+	cat /tmp/upload_url.txt
 
 .PHONY: build
 build: deps
