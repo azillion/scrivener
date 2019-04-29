@@ -32,8 +32,10 @@ all: upload-zip
 .PHONY: upload-zip
 upload-zip: create-release
 	curl -H "Authorization: token ${GITHUB_TOKEN}" \
-		-i -F "file=@${REPOSITORY}.zip" -F "type=application/zip" -F "name=${REPOSITORY}.zip"\
+		-H "Content-Type: application/octet-stream" \
+		--data-binary @"${REPOSITORY}.zip" \
 		"${UPLOAD_URL}?name=${REPOSITORY}.zip"
+		#-i -F "file=@${REPOSITORY}.zip" -F "type=application/zip" -F "name=${REPOSITORY}.zip"\
 	
 
 .PHONY: create-release
